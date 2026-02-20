@@ -1,0 +1,56 @@
+{
+  "$schema": "https://openclaw.ai/schemas/openclaw.json",
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "REPLACE_PRIMARY_MODEL",
+        "fallbacks": [
+          "REPLACE_FALLBACK_MODEL_1",
+          "REPLACE_FALLBACK_MODEL_2"
+        ]
+      },
+      "sandbox": {
+        "mode": "non-main"
+      }
+    }
+  },
+  "tools": {
+    "exec": {
+      "applyPatch": {
+        "workspaceOnly": true
+      }
+    },
+    "fs": {
+      "workspaceOnly": true
+    }
+  },
+  "channels": {
+    "telegram": {
+      "dmPolicy": "pairing",
+      "allowFrom": [
+        123456789
+      ],
+      "groupPolicy": "allowlist",
+      "streamMode": "partial"
+    }
+  },
+  "gateway": {
+    "port": 18789,
+    "mode": "local",
+    "bind": "loopback",
+    "auth": {
+      "mode": "token",
+      "token": "REPLACE_WITH_OPENCLAW_GATEWAY_TOKEN"
+    }
+  },
+  "plugins": {
+    "allow": [
+      "telegram"
+    ],
+    "entries": {
+      "telegram": {
+        "enabled": true
+      }
+    }
+  }
+}
