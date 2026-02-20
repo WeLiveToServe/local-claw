@@ -71,3 +71,23 @@
 18. Enter terminal command: `echo "STOP: run key-rotation drill + restore drill before production use."`
     Enter exact Codex prompt: `"Generate a short checklist for quarterly key rotation, service restart verification, and restore testing."`
     What this does: Establishes ongoing security hygiene beyond initial setup.
+
+19. Enter terminal command: `mkdir -p ~/openclaw-backup && tar -cf ~/openclaw-backup/openclaw-private-$(date +%Y%m%d-%H%M%S).tar -C ~ .openclaw/.env .openclaw/openclaw.json .openclaw/identity .openclaw/devices .openclaw/workspace .openclaw/agents`
+    Enter exact Codex prompt: `"Verify backup tar exists and print size only."`
+    What this does: Creates restorable private-state backup for disaster recovery.
+
+20. Enter terminal command: `cp -f ~/openclaw-backup/openclaw-private-*.tar "/media/$USER/USB DISK/" && sha256sum "/media/$USER/USB DISK"/openclaw-private-*.tar > "/media/$USER/USB DISK"/openclaw-private.sha256`
+    Enter exact Codex prompt: `"Verify checksum file exists and run sha256sum -c against the copied tar."`
+    What this does: Copies backup to offline media and validates file integrity.
+
+21. Enter terminal command: `cd ~ && sync && udisksctl unmount -b /dev/sdb1 && udisksctl power-off -b /dev/sdb`
+    Enter exact Codex prompt: `"If unmount fails with DeviceBusy, list blockers with lsof +D and suggest the smallest safe fix."`
+    What this does: Safely flushes and detaches USB media before unplugging.
+
+22. Enter terminal command: `./checks/check-secrets.sh && git add README.md .env.example SECURITY-NOTES.md brand-new-claw-install.md checks templates && git status -sb`
+    Enter exact Codex prompt: `"Confirm staged files are sanitized and no secret patterns are present before commit."`
+    What this does: Enforces pre-commit secret scanning and constrained staging.
+
+23. Enter terminal command: `git commit -m "Update sanitized recovery kit and runbook" && git push origin main`
+    Enter exact Codex prompt: `"Summarize commit scope and verify push target branch."`
+    What this does: Publishes only the safe recovery assets to remote source control.

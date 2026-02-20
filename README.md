@@ -32,3 +32,9 @@ Sanitized OpenClaw recovery repo for rebuilding a secure instance on a new machi
    - `checks/check-perms.sh`
    - `checks/check-health.sh`
    - `checks/check-secrets.sh`
+5. Create offline backup and verify checksum:
+   - `tar -czf ~/openclaw-backup/openclaw-state-$(date +%Y%m%d-%H%M%S).tgz ~/.openclaw`
+   - `sha256sum ~/openclaw-backup/openclaw-state-*.tgz`
+6. Follow git hygiene:
+   - Run `checks/check-secrets.sh` before commit.
+   - Commit only templates/docs/scripts, never live state.
